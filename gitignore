@@ -1,2 +1,35 @@
 #!/bin/bash
-printf "\n$2" >> $1
+
+add_flag=false
+del_flag=false
+
+if [ $1 == "-add" ]
+then
+	add_flag=true
+	shift
+elif [ $1 == "-del" ]
+then
+	del_flag=true
+	shift
+else
+	echo Mode not recognized
+	exit
+fi
+
+
+if [ $1 == "--" ]
+then
+	shift
+else
+	echo Please specify only one mode
+	exit
+fi
+
+
+if $add_flag
+then
+	printf "\n$2" >> $1
+elif $del_flag
+then
+	sed -i "/$2/d" $1
+fi
